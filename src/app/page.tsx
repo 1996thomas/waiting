@@ -54,7 +54,7 @@ export default function Home() {
         {!submitted ? (
           <>
             <h1 className="font-bold uppercase">
-              Kulture Nexus @ Innovative trends
+              Kulture Nexus & Innovative trends
             </h1>
             <div className="flex bg-white/15 rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-white/30 p-2 pl-5 items-center ">
               <input

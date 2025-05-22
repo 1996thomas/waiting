@@ -63,7 +63,7 @@ export async function POST(req: Request) {
 
   // Envoi email de confirmation
   await resend.emails.send({
-    from: emailFrom || "onboarding@resend.fr",
+    from: emailFrom || "newsletter@99knit.com",
     to: email,
     subject: "99Knit - Merci pour ton inscription",
     html: html,
