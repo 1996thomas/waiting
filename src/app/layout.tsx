@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Open soon ...",
-  description: "Knit is preparing something",
+  title: "99Knit",
+  description: "Kulture Nexus @ Innovative trends",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
