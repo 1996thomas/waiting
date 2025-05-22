@@ -45,6 +45,7 @@ export default function Home() {
         src="/anim.mp4"
         autoPlay
         loop
+        playsInline
         muted
         className="absolute inset-0 w-full h-full max-w-[600px] mx-auto object-cover brightness-55 "
       />
