@@ -56,7 +56,13 @@ export default function Home() {
             <h1 className="font-bold uppercase">
               Kulture Nexus & Innovative trends
             </h1>
-            <div className="flex bg-white/15 rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-white/30 p-2 pl-5 items-center ">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+              className="flex bg-white/15 rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-white/30 p-2 pl-5 items-center"
+            >
               <input
                 type="email"
                 placeholder="E-MAIL"
@@ -65,9 +71,9 @@ export default function Home() {
                 className="focus:outline-none bg-transparent text-white placeholder:text-white/50 w-full"
               />
               <button
-                onClick={handleSubmit}
+                type="submit"
                 disabled={isSubmitting}
-                className="h-7 w-7 aspect-square rounded-full bg-white text-black flex justify-center items-center "
+                className="h-7 w-7 z-10 aspect-square rounded-full bg-white text-black flex justify-center items-center cursor-pointer disabled:cursor-not-allowed"
               >
                 <Image
                   src={"/arrow.svg"}
@@ -77,7 +83,8 @@ export default function Home() {
                   className="h-3 w-3 translate-x-[1px]"
                 />
               </button>
-            </div>
+            </form>
+
             <label className="text-white text-sm font-semibold">
               SIGNUP FOR EARLY ACCESS
             </label>
@@ -96,7 +103,7 @@ export default function Home() {
             {error && <p className="text-red-400 text-xl">{error}</p>}
           </>
         ) : (
-          <p className="mt-8">Inscription validée</p>
+          <p className="mt-8 text-2xl drop-shadow-2xl">Inscription validée</p>
         )}
       </div>
     </div>
