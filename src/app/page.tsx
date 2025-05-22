@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-end min-h-screen font-mono bg-[#141415] ">
       <video
-        src="/animMobile.mp4"
+        src="/anim.mp4"
         autoPlay
         loop
         muted
