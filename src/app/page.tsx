@@ -40,7 +40,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col px-2 items-center justify-end h-dvh font-mono bg-[#141415]  overflow-hidden">
+    <div className="flex flex-col items-center justify-end h-dvh font-mono bg-[#141415]  overflow-hidden">
       <video
         src="/anim.mp4"
         autoPlay
@@ -56,42 +56,29 @@ export default function Home() {
             <h1 className="font-bold uppercase text-white">
               Kulture Nexus & Innovative trends
             </h1>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSubmit();
-              }}
-              className="flex bg-white/15 rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-white/30 p-2 pl-5 items-center w-full max-w-sm"
-            >
+            <div className="flex bg-white/15 rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-white/30 p-2 pl-5 z-10 items-center">
               <input
                 type="email"
                 placeholder="E-MAIL"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                onFocus={(e) =>
-                  e.target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                  })
-                }
                 className="focus:outline-none bg-transparent text-white placeholder:text-white/50 w-full"
               />
-
               <button
-                type="submit"
+                onClick={() => handleSubmit()}
                 disabled={isSubmitting}
-                className="ml-2 p-3 aspect-square rounded-full bg-white text-black flex justify-center items-center cursor-pointer disabled:cursor-not-allowed"
+                className="h-7 w-7 z-10 aspect-square rounded-full bg-white text-black flex justify-center items-center cursor-pointer disabled:cursor-not-allowed"
               >
                 <Image
-                  src="/arrow.svg"
+                  src={"/arrow.svg"}
                   alt="arrow"
-                  width={12}
-                  height={12}
+                  width={16}
+                  height={16}
+                  className="h-3 w-3 translate-x-[1px] pointer-events-none"
                   style={{ pointerEvents: "none" }}
-                  className="translate-x-[1px]"
                 />
               </button>
-            </form>
+            </div>
 
             <label className="text-white text-sm font-semibold">
               SIGNUP FOR EARLY ACCESS
@@ -111,9 +98,7 @@ export default function Home() {
             {error && <p className="text-red-400 text-xl">{error}</p>}
           </>
         ) : (
-          <p className="mt-8 text-2xl drop-shadow-2xl text-white">
-            Inscription validée
-          </p>
+          <p className="mt-8 text-2xl drop-shadow-2xl text-white">Inscription validée</p>
         )}
       </div>
     </div>

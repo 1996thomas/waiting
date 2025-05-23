@@ -6,6 +6,8 @@ export const html = `
     max-width: 600px;
     margin: auto;
     padding: 32px;
+    background-color: #141415;
+    color:
   "
 >
   <h1
@@ -23,23 +25,23 @@ export const html = `
     Merci pour ta souscription !
   </p>
 
-  <p style="text-align: center; font-size: 15px">
+  <p style="text-align: center; font-size: 12px">
     Nous avons créé la plateforme <strong>99Knit</strong> pour re-dynamiser le
     marché de la mode. Offrir une véritable alternative aux géants de
     l'industrie et à la fast fashion.
   </p>
 
-  <p style="text-align: center; font-size: 15px">
+  <p style="text-align: center; font-size: 12px">
     Nous documentons les sous-cultures et les mouvements qui font naître les
     nouvelles tendances. Pour redonner du sens à ce que l’on porte, et apporter
     une place forte aux marques émergentes et aux acteurs de la culture.
   </p>
 
-  <p style="text-align: center; font-size: 15px; font-weight: 600">
+  <p style="text-align: center; font-size: 12px; font-weight: 600">
     Si tu es là, c’est que tu fais partie du projet maintenant.
   </p>
 
-  <p style="text-align: center; font-size: 15px">
+  <p style="text-align: center; font-size: 12px">
     Nous te partagerons ici du contenu de fond sur notre travail journalistique,
     et on te donnera des accès exclusifs pour les drops à venir sur notre shop.
     Rien de plus, promis.
