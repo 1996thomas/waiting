@@ -13,6 +13,7 @@ export default function Home() {
 
   const handleSubmit = async () => {
     if (isSubmitting) return; // protection en double
+    alert("clicked");
     setIsSubmitting(true);
     setError("");
 
@@ -62,7 +63,7 @@ export default function Home() {
                 placeholder="E-MAIL"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="focus:outline-none bg-transparent text-white placeholder:text-white/50 w-full"
+                className="focus:outline-none bg-transparent text-white placeholder:text-white/50 w-full pr-1"
               />
               <button
                 onClick={() => handleSubmit()}
@@ -70,12 +71,12 @@ export default function Home() {
                 className="h-7 w-7 z-10 aspect-square rounded-full bg-white text-black flex justify-center items-center cursor-pointer disabled:cursor-not-allowed"
               >
                 <Image
-                  src={"/arrow.svg"}
+                  src="/arrow.svg"
                   alt="arrow"
                   width={16}
                   height={16}
-                  className="h-3 w-3 translate-x-[1px] pointer-events-none"
-                  style={{ pointerEvents: "none" }}
+                  className="h-3 w-3 translate-x-[1px]"
+                  priority
                 />
               </button>
             </div>
@@ -98,7 +99,9 @@ export default function Home() {
             {error && <p className="text-red-400 text-xl">{error}</p>}
           </>
         ) : (
-          <p className="mt-8 text-2xl drop-shadow-2xl text-white">Inscription validée</p>
+          <p className="mt-8 text-2xl drop-shadow-2xl text-white">
+            Inscription validée
+          </p>
         )}
       </div>
     </div>
