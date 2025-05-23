@@ -49,7 +49,7 @@ export default function Home() {
         muted
         className="absolute inset-0 w-full h-full z-0 max-w-[600px] mx-auto object-cover brightness-55 "
       />
-<div className="flex-1"/>
+      <div className="flex-1" />
       <div className="mt-10 w-full flex-1 max-w-sm  gap-3 flex flex-col items-center justify-center z-10">
         {!submitted ? (
           <>
@@ -80,7 +80,8 @@ export default function Home() {
                   alt="arrow"
                   width={16}
                   height={16}
-                  className="h-3 w-3 translate-x-[1px]"
+                  className="h-3 w-3 translate-x-[1px] pointer-events-none"
+                  style={{ pointerEvents: "none" }}
                 />
               </button>
             </form>
