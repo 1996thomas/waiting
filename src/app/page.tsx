@@ -12,53 +12,70 @@ export default function Home() {
 
   const handleSubmit = async () => {
     setError("");
+
     if (!email.includes("@")) {
       setError("Email invalide.");
       return;
     }
 
-    const res = await fetch("/api/newsletter/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, website, start: startTime }),
-    });
+    try {
+      const res = await fetch("/api/newsletter/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, website, start: startTime }),
+      });
 
-    if (res.ok) {
-      setSubmitted(true);
-    } else {
-      const data = await res.json();
-      setError(data.error || "Erreur lors de l'inscription.");
+      console.log("Réponse status :", res.status);
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        let message = "Erreur lors de l'inscription.";
+        try {
+          const data = await res.json();
+          message = data.error || message;
+        } catch (jsonErr) {
+          console.error("Erreur de parsing JSON :", jsonErr);
+        }
+        setError(message);
+      }
+    } catch (fetchErr) {
+      console.error("Erreur de requête :", fetchErr);
+      setError("Erreur de connexion.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-end h-dvh font-mono bg-[#141415]  overflow-hidden">
+    <div className="flex flex-col items-center justify-end min-h-screen font-mono bg-[#141415] overflow-auto relative">
       <video
         src="/anim.mp4"
         autoPlay
         loop
         playsInline
         muted
-        className="absolute inset-0 w-full h-full z-0 max-w-[600px] mx-auto object-cover brightness-55 "
+        className="absolute inset-0 w-full h-full z-0 max-w-[600px] mx-auto object-cover brightness-55"
       />
+
       <div className="flex-1" />
-      <div className="mt-10 w-full flex-1 max-w-sm  gap-3 flex flex-col items-center justify-center z-10">
+      <div className="mt-10 w-full flex-1 max-w-sm gap-3 flex flex-col items-center justify-center z-10 relative px-4">
         {!submitted ? (
           <>
-            <h1 className="font-bold uppercase text-white">
+            <h1 className="font-bold uppercase text-white text-center">
               Kulture Nexus & Innovative trends
             </h1>
-            <div className="flex bg-white/15 rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-white/30 p-2 pl-5 z-10 items-center">
+
+            <div className="flex bg-white/15 rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-white/30 p-2 pl-5 z-10 items-center w-full">
               <input
                 type="email"
                 placeholder="E-MAIL"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="focus:outline-none bg-transparent text-white placeholder:text-white/50 w-full pr-1"
+                className="focus:outline-none bg-transparent text-white placeholder:text-white/50 w-full pr-2"
               />
               <button
-                onClick={() => handleSubmit()}
-                className="h-7 w-7 z-10 aspect-square rounded-full bg-white text-black flex justify-center items-center cursor-pointer disabled:cursor-not-allowed"
+                type="button"
+                onClick={handleSubmit}
+                className="h-7 w-7 aspect-square rounded-full bg-white text-black flex justify-center items-center z-50"
               >
                 <Image
                   src="/arrow.svg"
@@ -75,8 +92,8 @@ export default function Home() {
               SIGNUP FOR EARLY ACCESS
             </label>
             <h2 className="text-white">PARIS, FR</h2>
-            {/* Honeypot */}
 
+            {/* Honeypot */}
             <input
               type="text"
               name="website"
@@ -93,6 +110,11 @@ export default function Home() {
             Inscription validée
           </p>
         )}
+
+        {/* Pour debug mobile */}
+        <p className="text-white text-xs opacity-30">
+          submitted: {submitted.toString()}
+        </p>
       </div>
     </div>
   );
