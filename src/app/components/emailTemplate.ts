@@ -6,8 +6,8 @@ export const html = `
     max-width: 600px;
     margin: auto;
     padding: 32px;
-    background-color: #141415;
-    color:
+    background-color: #F0F0F0;
+    color: #121212
   "
 >
   <h1
