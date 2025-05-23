@@ -9,17 +9,11 @@ export default function Home() {
   const [startTime] = useState(Date.now()); // Anti-spam timing
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
-    if (isSubmitting) return; // protection en double
-    alert("clicked");
-    setIsSubmitting(true);
     setError("");
-
     if (!email.includes("@")) {
       setError("Email invalide.");
-      setIsSubmitting(false);
       return;
     }
 
@@ -35,9 +29,6 @@ export default function Home() {
       const data = await res.json();
       setError(data.error || "Erreur lors de l'inscription.");
     }
-
-    // Attendre un peu pour éviter le spam même si le backend répond vite
-    setTimeout(() => setIsSubmitting(false), 800);
   };
 
   return (
@@ -67,7 +58,6 @@ export default function Home() {
               />
               <button
                 onClick={() => handleSubmit()}
-                disabled={isSubmitting}
                 className="h-7 w-7 z-10 aspect-square rounded-full bg-white text-black flex justify-center items-center cursor-pointer disabled:cursor-not-allowed"
               >
                 <Image
