@@ -40,7 +40,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-end h-svh font-mono bg-[#141415] ">
+    <div className="flex flex-col items-center justify-end h-dvh font-mono bg-[#141415]  overflow-hidden">
       <video
         src="/anim.mp4"
         autoPlay
