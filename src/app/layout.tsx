@@ -14,10 +14,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "99Knit",
-  description: "Kulture Nexus @ Innovative trends",
+  description: "Kulture Nexus & Innovative trends",
   icons: {
-    icon: "/favicon.svg",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    other: [
+      { rel: "icon", type: "image/png", url: "/favicon-32x32.png" },
+      { rel: "icon", type: "image/svg+xml", url: "/favicon.svg" },
+    ],
   },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
@@ -26,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
