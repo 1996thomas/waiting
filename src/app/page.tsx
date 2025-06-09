@@ -42,13 +42,23 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-end h-dvh font-mono bg-[#141415]  overflow-hidden">
       <video
-        src="/anim.mp4"
+        src="/anim-mobile.mp4"
         autoPlay
         loop
         playsInline
         muted
-        className="absolute inset-0 w-full h-full z-0 max-w-[600px] mx-auto object-cover brightness-55 "
+        className="absolute inset-0 w-full h-full z-0 max-w-[600px] mx-auto object-cover brightness-55 md:hidden"
       />
+
+      <video
+        src="/anim-desktop.mp4"
+        autoPlay
+        loop
+        playsInline
+        muted
+        className="absolute inset-0 w-full h-full z-0 object-cover brightness-55 hidden md:block"
+      />
+
       <div className="flex-1" />
       <div className="mt-10 w-full flex-1 max-w-sm  gap-3 flex flex-col items-center justify-center z-10">
         {!submitted ? (
