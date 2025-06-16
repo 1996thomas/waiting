@@ -1,22 +1,27 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { put, head } from "@vercel/blob";
 import { Resend } from "resend";
 import { html } from "@/app/components/emailTemplate";
 import { decrypt, encrypt } from "@/utils";
 
-const resend = new Resend(process.env.RESEND);
+const resend = new Resend(process.env.RESEND!);
 const BLOB_NAME = "encrypted-subscribers-AtQOHuUSeObMWSfGaKWNwEHl72RCLe.json";
 const emailFrom = process.env.EMAIL_FROM;
 
-export async function POST(req: Request) {
+/**
+ * Détermine si la chaîne ressemble à notre format « iv:tag:cipher »
+ */
+const looksEncrypted = (str: string) => str.split(":").length === 3;
+
+export async function POST(req: NextRequest) {
   const { email, website, start } = await req.json();
 
-  // Honeypot
+  // Honeypot --------------------------------------------------------------
   if (website) {
     return NextResponse.json({ error: "Bot détecté" }, { status: 400 });
   }
 
-  // Anti‑spam
+  // Anti‑spam -------------------------------------------------------------
   const elapsed = Date.now() - Number(start);
   if (isNaN(elapsed) || elapsed < 800) {
     return NextResponse.json(
@@ -31,57 +36,51 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Email invalide" }, { status: 400 });
   }
 
-  /**
-   * Lecture du blob existant --------------------------------------------------
-   */
+  // Lecture du blob existant ---------------------------------------------
   let existing: { email: string; date: string }[] = [];
   try {
     const blobMeta = await head(BLOB_NAME);
     if (blobMeta?.url) {
       const res = await fetch(blobMeta.url);
-      const json = await res.text();
-      existing = JSON.parse(json);
+      existing = await res.json();
     }
-  } catch (err) {
-    console.info(
-      err,
-      "Blob introuvable ou invalide, création d’un nouveau fichier."
-    );
+  } catch {
+    // premier upload : on continue avec existing = []
   }
 
-  // On décrypte chaque email pour vérifier les doublons
+  // Vérification de doublon ----------------------------------------------
   const alreadyExists = existing.some((entry) => {
-    try {
-      console.log(alreadyExists);
-      return decrypt(entry.email) === email;
-    } catch {
-      return false; // ignore les lignes corrompues
+    if (looksEncrypted(entry.email)) {
+      try {
+        return decrypt(entry.email) === email;
+      } catch {
+        return false; // entrée corrompue ignorée
+      }
     }
+    // Entrées legacy non chiffrées
+    return entry.email === email;
   });
 
   if (alreadyExists) {
     return NextResponse.json({ error: "Email déjà inscrit" }, { status: 409 });
   }
 
+  // Ajout de la nouvelle entrée ------------------------------------------
   const encryptedEmail = encrypt(email);
-  console.log(encryptedEmail, "Email chiffré");
-  console.log(decrypt(encryptedEmail), "Email en clair");
   const newEntry = { email: encryptedEmail, date: new Date().toISOString() };
   const updated = [...existing, newEntry];
 
   await put(BLOB_NAME, JSON.stringify(updated, null, 2), {
-    access: "public",
+    access: "public", // le fichier reste public mais chiffré
     allowOverwrite: true,
   });
 
-  /**
-   * Envoi email de confirmation ---------------------------------------------
-   */
+  // Envoi email de confirmation ------------------------------------------
   await resend.emails.send({
     from: `99Knit <${emailFrom || "newsletter@99knit.com"}>`,
     to: email,
     subject: "99Knit - Merci pour ton inscription",
-    html: html,
+    html,
   });
 
   return NextResponse.json({ success: true });
