@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { head } from "@vercel/blob";
 import { decrypt } from "@/utils";
 
-const BLOB_NAME = "encrypted-subscribers-AtQOHuUSeObMWSfGaKWNwEHl72RCLe.json";
+const BLOB_NAME = process.env.BLOB_NAME || "";
 const EXPORT_TOKEN = process.env.EXPORT_TOKEN;
 
 export async function GET(req: NextRequest) {

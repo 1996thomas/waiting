@@ -5,7 +5,7 @@ import { html } from "@/app/components/emailTemplate";
 import { decrypt, encrypt } from "@/utils";
 
 const resend = new Resend(process.env.RESEND!);
-const BLOB_NAME = "encrypted-subscribers-AtQOHuUSeObMWSfGaKWNwEHl72RCLe.json";
+const BLOB_NAME = process.env.BLOB_NAME || "BLOB_NAME";
 const emailFrom = process.env.EMAIL_FROM;
 
 /**
